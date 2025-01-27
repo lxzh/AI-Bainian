@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
 import './App.css'
-import Lantern from './components/Lantern'
-import FuCharacter from './components/FuCharacter'
 import OpenAI from 'openai'
 
 function App() {
@@ -93,6 +91,16 @@ function App() {
     }
   }
 
+  const copyToClipboard = () => {
+    if (greeting) {
+      navigator.clipboard.writeText(greeting).then(() => {
+        alert('文案已复制到剪切板！')
+      }).catch(err => {
+        console.error('Failed to copy text: ', err)
+      })
+    }
+  }
+
   return (
     <div className="min-h-screen bg-red-100 py-12">
       <h1 className="text-4xl font-bold text-center mb-10 text-red-600">AI 拜年文案生成器</h1>
@@ -128,6 +136,12 @@ function App() {
         {greeting && (
           <div className="bg-yellow-100 text-red-600 px-8 py-16 rounded-xl shadow-lg text-2xl font-bold text-center">
             {greeting}
+            <button
+              onClick={copyToClipboard}
+              className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition-colors"
+            >
+              复制到剪切板
+            </button>
           </div>
         )}
       </div>
